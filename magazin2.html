@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>統合マガジン📚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="../../turn.min.js"></script>
+  <!-- Googleフォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+
+<div class="header-bar">
+    <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+    </div>
+    </div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="syugyou.html">じゅぎょう</a></li>
+        <li><a href="gane.html">ゲーム</a></li>
+        <li><a href="kozinnsesaku.html">こじんせいさく</a></li>
+        <li><a href="profile.html">プロフィール</a></li>
+      </ul>
+    </nav>
+  </header>
+  </header>
+
+<main>
+
+<h2>　2ねん</h2>
+<h1>　　　　やじるし（←→）でページをめくることができます。</h1>
+<h1>　　　　ページにゅうりょくでもいけます。</h1>
+
+</main>
+<div id="magazine">
+  <!-- 表紙 -->
+  <div class="cover"><img src="img/cover.png" alt=""></div>
+
+  <!-- 固定画像ページ 1〜6 -->
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/1.png" data-fullscreen="img/ninen/1.mp4">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/2.png" data-fullscreen="img/ninen/2.png">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/3.png" data-fullscreen="img/ninen/3.mp4">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/4.png" data-fullscreen="img/ninen/4.png">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/5.png" data-fullscreen="img/ninen/5.png">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/6.png" data-fullscreen="img/ninen/6.png">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/7.png" data-fullscreen="img/ninen/7.png">
+  </div>
+  <div>
+	<img class="fullscreen-swap" src="img/ninenpage/8.png" data-fullscreen="img/ninen/8.png">
+  </div>
+
+  <div class="cover"><img src="img/itinenpage/cover2.png" alt=""></div>
+</div>
+
+
+<div id="controls">
+  <label for="page-number">Page:</label>
+  <input type="text" size="3" id="page-number">
+  <span class="page-label">of</span>
+  <span id="number-pages"></span>
+</div>
+</main>
+<script>
+  const fixedPages = 7; // 表紙1 + 画像6
+
+  function addDynamicPage(page, book) {
+    if (!book.turn('hasPage', page)) {
+      const element = $('<div />', {
+        class: 'page ' + ((page % 2 === 0) ? 'odd' : 'even'),
+        id: 'page-' + page
+      }).html('<i class="loader"></i>');
+
+      book.turn('addPage', element, page);
+
+      setTimeout(() => {
+        element.html('<div class="data">ページ ' + (page - 1) + ' のデータ</div>');
+      }, 800);
+    }
+  }
+
+  $(window).ready(function () {
+    const totalPages = 9; // 実ページ数
+    const visiblePageCount = totalPages - 1; // 表示上は0ページスタート
+
+    $('#magazine').turn({
+      acceleration: true,
+      elevation: 50,
+      display: 'double',
+      pages: totalPages,
+      gradients: !$.isTouch,
+      page: 1, // 開始ページは1（※0はturn.js的に無効なので注意）
+      when: {
+        turning: function (e, page, view) {
+          if (page > fixedPages) {
+            const range = $(this).turn('range', page);
+            for (let p = range[0]; p <= range[1]; p++) {
+              if (p > fixedPages) addDynamicPage(p, $(this));
+            }
+          }
+        },
+        turned: function (e, page) {
+          $('#page-number').val(page - 1); // 表示は0スタートに見せる
+        }
+      }
+    });
+
+    $('#number-pages').text(visiblePageCount); // 表示も0からカウント
+
+    $('#page-number').keydown(function (e) {
+      if (e.keyCode === 13) {
+        const requestedPage = parseInt($(this).val(), 10) + 1; // 入力0 → page=1
+        $('#magazine').turn('page', requestedPage);
+      }
+    });
+
+    // ← → キー操作
+    $(window).on('keydown', function (e) {
+      if (e.target.tagName.toLowerCase() !== 'input') {
+        if (e.keyCode === 37) $('#magazine').turn('previous');
+        else if (e.keyCode === 39) $('#magazine').turn('next');
+      }
+    });
+  });
+</script>
+
+<script src="script.js"></script>
+<script>
+  function openImageFullscreen(imgSrc) {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.style.width = "100vw";
+    img.style.height = "100vh";
+    img.style.objectFit = "contain";
+    img.style.background = "#000";
+    img.style.position = "fixed";
+    img.style.top = 0;
+    img.style.left = 0;
+    img.style.zIndex = 9999;
+
+    // タップで閉じる
+    img.addEventListener("click", () => {
+      document.exitFullscreen?.();
+      img.remove();
+    });
+
+    document.body.appendChild(img);
+
+    if (img.requestFullscreen) {
+      img.requestFullscreen();
+    } else if (img.webkitRequestFullscreen) {
+      img.webkitRequestFullscreen();
+    } else if (img.msRequestFullscreen) {
+      img.msRequestFullscreen();
+    }
+  }
+
+  // ⛳️ 画像をタップ → data-fullscreen の画像でフルスクリーン
+  document.querySelectorAll(".fullscreen-swap").forEach(img => {
+    img.addEventListener("click", () => {
+      const newSrc = img.getAttribute("data-fullscreen");
+      openImageFullscreen(newSrc);
+    });
+  });
+</script>
+
+
+
+</body>
+</html>

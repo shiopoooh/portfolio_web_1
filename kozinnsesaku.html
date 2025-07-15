@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ハンバーガーメニュー</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header-bar">
+    <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+    </div>
+    </div>
+    <nav class="menu" id="menu">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="syugyou.html">じゅぎょう</a></li>
+        <li><a href="gane.html">ゲーム</a></li>
+        <li><a href="kozinnsesaku.html">こじんせいさく</a></li>
+        <li><a href="profile.html">プロフィール</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="section-title">　こじんせいさく</div>
+    <p style="font-size: 30px">　タッチでフルスクリーンひょうじされます。</p>
+    <div class="grid">
+
+    <button class="button" ><img  class="fullscreen-swap img2" src="img/1.png" data-fullscreen="img/1.png"></button>
+   <button class="button" ><img class="fullscreen-swap img2" src="img/2.png" data-fullscreen="img/2.png"></button>
+    <button class="button" ><img class="fullscreen-swap img2" src="img/3.png" data-fullscreen="img/3.png"></button>
+    <button class="button" ><img class="fullscreen-swap img2" src="img/4.png" data-fullscreen="img/4.png"></button>
+    <button class="button" ><img class="fullscreen-swap img2" src="img/5.png" data-fullscreen="img/5.png"></button>
+    </button>
+
+
+
+
+    
+  </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+  function openImageFullscreen(imgSrc) {
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.style.width = "100vw";
+    img.style.height = "100vh";
+    img.style.objectFit = "contain";
+    img.style.background = "#000";
+    img.style.position = "fixed";
+    img.style.top = 0;
+    img.style.left = 0;
+    img.style.zIndex = 9999;
+
+    // タップで閉じる
+    img.addEventListener("click", () => {
+      document.exitFullscreen?.();
+      img.remove();
+    });
+
+    document.body.appendChild(img);
+
+    if (img.requestFullscreen) {
+      img.requestFullscreen();
+    } else if (img.webkitRequestFullscreen) {
+      img.webkitRequestFullscreen();
+    } else if (img.msRequestFullscreen) {
+      img.msRequestFullscreen();
+    }
+  }
+
+  // ⛳️ 画像をタップ → data-fullscreen の画像でフルスクリーン
+  document.querySelectorAll(".fullscreen-swap").forEach(img => {
+    img.addEventListener("click", () => {
+      const newSrc = img.getAttribute("data-fullscreen");
+      openImageFullscreen(newSrc);
+    });
+  });
+</script>
+</body>
+</html>

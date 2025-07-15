@@ -1,0 +1,368 @@
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #c1e3dc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 5s ease;
+      pointer-events: none; /* ← これでクリックをブロックしない */
+}
+
+main {
+  padding-top: 80px; /* ← header-bar の高さよりちょっと大きめに！ */
+}
+
+
+body {
+  margin: 0;
+  font-family: "Darumadrop One", sans-serif;
+  background: url("img/Clouds-and-checks_green.mp4") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Darumadrop One', 'Noto Sans JP', sans-serif;
+}
+
+/* ✅ 白帯（ヘッダー用バー）を追加！ */
+.header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #ffffffdd; /* 半透明の白帯 */
+  z-index: 1001;
+  display: flex;
+  justify-content: flex-end; /* ハンバーガーを右寄せに */
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 0px; /* ← ここも変えられる！例えば 10px 30px とか */
+}
+
+/* ✅ ハンバーガーメニュー：帯の中で配置に変更！ */
+.hamburger {
+  width: 30px;
+  height: 25px;
+  /* 以前の position: fixed を削除 */
+  cursor: pointer;
+  z-index: 1002; /* メニューより上 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative; /* アニメーション用に追加 */
+  margin-right: 10px;
+}
+
+.hamburger span {
+  background: #4ca493;
+  height: 4px;
+  width: 100%;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ✅ バツ印アニメーション（そのまま使える） */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 10px;
+  position: absolute;
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 10px;
+  position: absolute;
+}
+
+/* ✅ メニュー（スライド） */
+.menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: #c1e3dc;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000; /* .header-bar より下に！ */
+  overflow-y: auto;
+  padding-top: 80px; /* ← header-bar の高さよりちょっと大きめに！ */
+}
+
+/* ✅ アクティブ時に表示 */
+.menu.active {
+  transform: translateX(0%);
+}
+
+
+
+
+
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  border-top: 1px solid #ffffff;
+}
+
+.menu li a {
+  display: block;
+  padding: 15px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.menu li a:hover {
+  background: #4ca493;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;        
+  padding: 20px 50px;
+}
+
+.grid div {
+  background: hsl(137, 64%, 79%);
+  height: 230px;
+  width: 230px;
+  border-radius: 20px;
+  aspect-ratio: 1/1;
+}
+
+
+.section-title {
+  background: #c1e3dc;
+  height: 50px;
+  margin: 20px;
+  text-align: left;
+  line-height: 50px;
+  font-weight: bold;
+  font-family: "Darumadrop One", sans-serif;
+  font-size: 2rem;
+}
+
+.button {
+  width: 230px;
+  height: 230px;
+  border: none;
+  background: none;
+  cursor: pointer; /* マウスを乗せると手の形に */
+}
+
+.button2 {
+  display: flex;
+  justify-content: center;  /* ← 横中央 */
+  align-items: center;      /* ← 縦中央 */
+  height: 100px;             /* 高さも設定しようね！ */
+  width: 150px;
+  border-radius: 12px;
+  background-color: #70c4b3;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+.img{
+  height: 100px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.img2{
+  height: 230px;
+  width: 230px;
+  border-radius: 20px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.img3{
+  height: 160px;
+  width: 180px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.img_sakuhin {
+  display: flex;
+  justify-content: center; /* 横方向中央 */
+  align-items: center;     /* 縦方向中央（必要なら） */
+  margin: 20px auto;       /* ブロック要素を中央にする */
+  height: 80%;
+  text-align: center;
+  font-weight: bold;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+.img-profile {
+  height: 100%;
+  width: 100%;
+}
+
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+footer {
+  text-align: center;
+  margin: 10px 0;    
+}
+
+footer button {
+  background: #4db6a1; /* プロフィールボタンの色を指定 */
+  border: none;
+  padding: 10px 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #000000;         /* 文字色を黒に */
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+}
+
+#magazine {
+  width: 1400px;
+  height: 900px;
+  z-index: 0; /* 下の方に置く！ */
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+
+#magazine .turn-page {
+  background-color: none;
+  background-size: 100% 100%; /* このままでOK */
+}
+
+#book{
+	width:800px;
+	height:500px;
+}
+
+#book .turn-page{
+	background-color:white;
+}
+
+#book .cover{
+	background:#333;
+}
+
+#book .cover h1{
+	color:white;
+	text-align:center;
+	font-size:50px;
+	line-height:500px;
+	margin:0px;
+}
+
+#book .loader{
+	background-image:url(loader.gif);
+	width:24px;
+	height:24px;
+	display:block;
+	position:absolute;
+	top:238px;
+	left:188px;
+}
+
+#book .data{
+	text-align:center;
+	font-size:40px;
+	color:#999;
+	line-height:500px;
+}
+
+#controls{
+	width:800px;
+	text-align:center;
+	margin:20px 0px;
+	font:30px arial;
+}
+
+#controls input,
+#controls label,
+#controls .page-label,
+#number-pages{
+	font-family: 'Darumadrop One', sans-serif;
+  font-size: 24px;
+  color: #4ca493;
+}
+
+#controls input {
+  font-family: 'Darumadrop One', sans-serif;
+  font-size: 24px;
+  width: 60px;
+  text-align: center;
+  border: 2px solid #79e2cd;
+  border-radius: 5px;
+}
+
+#book .odd{
+	background-image:-webkit-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image:-moz-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image:-o-linear-gradient(left, #FFF 95%, #ddd 100%);
+	background-image:-ms-linear-gradient(left, #FFF 95%, #ddd 100%);
+}
+
+#book .even{
+	background-image:-webkit-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image:-moz-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image:-o-linear-gradient(right, #FFF 95%, #ddd 100%);
+	background-image:-ms-linear-gradient(right, #FFF 95%, #ddd 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* スマホでは2列に！ */
+    padding: 10px 20px; /* 余白も少しコンパクトに */
+    gap: 15px; /* 隙間も小さめに調整 */
+  }
+
+  .grid div {
+    width: 100%; /* 幅を親に合わせて自動に */
+    height: auto;
+    aspect-ratio: 1 / 1; /* 正方形維持したいならこれが便利！ */
+  }
+}
+
